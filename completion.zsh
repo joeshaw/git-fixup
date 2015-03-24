@@ -1,7 +1,11 @@
 #compdef git-fixup
-local lines words
+local lines commits
 
 lines=(${(f)"$(git fixup)"})
-words=(${(f)"$(git fixup | cut -d' ' -f 1)"})
+if test $? -ne 0; then
+    compadd ()
+    return
+fi
+commits=(${lines[@]%% *})
 
-compadd -l -d lines -a -- words
+compadd -l -d lines -a -- commits
